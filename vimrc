@@ -140,6 +140,23 @@ let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 set completeopt-=preview
 
+" YouCompleteMe
+let g:ycm_server_python_interpreter='/usr/bin/python3'
+let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+" vim-lsp
+if executable('/usr/bin/clangd')
+    augroup Clangd
+        autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'clangd',
+            \ 'cmd': {server_info->['/usr/bin/clangd']},
+            \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+            \ })
+        autocmd FileType c,cpp,objc,objcpp nmap <buffer> gd <plug>(lsp-definition)
+        autocmd FileType c,cpp,objc,objcpp setlocal omnifunc=lsp#complete
+    augroup END
+endif
+
+
 imap <C-k> <Plug>(neocomplcache_snippets_force_expand)
 smap <C-k> <Plug>(neocomplcache_snippets_force_expand)
 imap <C-l> <Plug>(neocomplcache_snippets_force_jump)

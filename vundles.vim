@@ -9,9 +9,10 @@ call vundle#rc()
 Plugin 'gmarik/vundle'
 
 " Code Completions
-Plugin 'Shougo/neocomplcache'
-Plugin 'Raimondi/delimitMate'
-Plugin 'ervandew/supertab'
+"Plugin 'Shougo/neocomplcache'
+"Plugin 'Raimondi/delimitMate'
+"Plugin 'ervandew/supertab'
+Plugin 'Valloric/YouCompleteMe'
 
 " snippets
 " Plugin 'garbas/vim-snipmate'
@@ -62,5 +63,6 @@ Plugin 'kien/rainbow_parentheses.vim'
 " Color Schemes
 Plugin 'tomasr/molokai'
 Plugin 'chriskempson/vim-tomorrow-theme'
+
 
 filetype plugin indent on     " required!
