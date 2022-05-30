@@ -50,9 +50,9 @@ set directory=~/tmp,/tmp                                          " move swp fil
 set autoindent
 set expandtab       " expand tab to space
 set smartindent     " indent when
-set tabstop=8       " tab width
-set softtabstop=8   " backspace
-set shiftwidth=8    " indent width
+set tabstop=4       " tab width
+set softtabstop=4   " backspace
+set shiftwidth=4    " indent width
 " set textwidth=79
 " set smarttab      " insert tabs on the start of a line according to shiftwidth, not tabstop
 
@@ -233,3 +233,10 @@ if has("gui_running")
     map <D-9> 9gt
     map <D-0> :tablast<CR>
 endif
+
+function! UpdateCtags()
+        silent exec "!ctags -R --c++-kinds=+p --fields=+iaS --extras=+q --languages=c,c++ ."
+endfunction
+
+autocmd BufWritePost *.c,*.h,*.cpp,*.hpp call UpdateCtags()
+setlocal tags+=~/.vim/tags/usr-include/tags
