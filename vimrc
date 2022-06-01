@@ -127,24 +127,29 @@ let NERDTreeWinPos = "left"
 let NERDSpaceDelims=1
 " nmap <D-/> :NERDComToggleComment<cr>
 let NERDCompactSexyComs=1
+" Start NERDTree, unless a file or session is specified, eg. vim -S session_file.vim.
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists('s:std_in') && v:this_session == '' | NERDTree | endif
+autocmd VimEnter * NERDTree
 
 " powerline
 "let g:Powerline_symbols = 'fancy'
 
+"=======================自动完成，可以使用YouCompleteMe替代=========================
 " NeoComplCache
-let g:neocomplcache_enable_at_startup=1
-let g:neoComplcache_disableautocomplete=1
+"let g:neocomplcache_enable_at_startup=1
+"let g:neoComplcache_disableautocomplete=1
 "let g:neocomplcache_enable_underbar_completion = 1
 "let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_smart_case=1
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-set completeopt-=preview
+"let g:neocomplcache_enable_smart_case=1
+"let g:neocomplcache_min_syntax_length = 3
+"let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+"set completeopt-=preview
 
-imap <C-k> <Plug>(neocomplcache_snippets_force_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_force_expand)
-imap <C-l> <Plug>(neocomplcache_snippets_force_jump)
-smap <C-l> <Plug>(neocomplcache_snippets_force_jump)
+"imap <C-k> <Plug>(neocomplcache_snippets_force_expand)
+"smap <C-k> <Plug>(neocomplcache_snippets_force_expand)
+"imap <C-l> <Plug>(neocomplcache_snippets_force_jump)
+"smap <C-l> <Plug>(neocomplcache_snippets_force_jump)
 
 " Enable omni completion.
 "autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -154,6 +159,7 @@ smap <C-l> <Plug>(neocomplcache_snippets_force_jump)
 "  let g:neocomplcache_omni_patterns = {}
 "endif
 "let g:neocomplcache_omni_patterns.erlang = '[a-zA-Z]\|:'
+"==================================================================================
 "
 " SuperTab
 " let g:SuperTabDefultCompletionType='context'
@@ -162,9 +168,10 @@ let g:SuperTabRetainCompletionType=2
 
 " YouCompleteMe
 " Let clangd fully control code completion
-let g:ycm_clangd_uses_ycmd_caching = 0
-" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
-let g:ycm_clangd_binary_path = exepath("clangd")
+let g:ycm_clangd_uses_ycmd_caching = 1
+" 设置这个要十分小心，因为当YCM的install.py脚本执行安装时会自动下载一份clangd，放在YouCompleteMe/third_party/ycmd/third_party/clangd/cache
+" 如果指定ycm_clangd_binary_path时的clangd版本和那份clangd版本不兼容，那么YCM的类C语言的功能就不可用了
+"let g:ycm_clangd_binary_path = exepath(".vim/bundle/YouCompleteMe/third_party/ycmd/third_party/clangd/output/bin/clangd")
 let g:ycm_server_python_interpreter='/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
 " vim-lsp
@@ -182,7 +189,9 @@ let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
 "endif
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>ff :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"nnoremap <leader>ff :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 " 自动补全配置
 set completeopt=longest,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口
@@ -194,15 +203,15 @@ inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中
 "inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 "youcompleteme  默认tab  s-tab 和自动补全冲突
-"let g:ycm_key_list_select_completion=['<c-n>']
-let g:ycm_key_list_select_completion = ['<Down>']
-"let g:ycm_key_list_previous_completion=['<c-p>']
-let g:ycm_key_list_previous_completion = ['<Up>']
+let g:ycm_key_list_select_completion=['<c-n>']
+"let g:ycm_key_list_select_completion = ['<Down>']
+let g:ycm_key_list_previous_completion=['<c-p>']
+"let g:ycm_key_list_previous_completion = ['<Up>']
 "let g:ycm_confirm_extra_conf=0 "关闭加载.ycm_extra_conf.py提示
 
 let g:ycm_collect_identifiers_from_tags_files=1 " 开启 YCM 基于标签引擎
 let g:ycm_min_num_of_chars_for_completion=2 " 从第2个键入字符就开始罗列匹配项
-let g:ycm_cache_omnifunc=0  " 禁止缓存匹配项,每次都重新生成匹配项
+"let g:ycm_cache_omnifunc=0  " 禁止缓存匹配项,每次都重新生成匹配项
 let g:ycm_seed_identifiers_with_syntax=1    " 语法关键字补全
 "nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>    "force recomile with syntastic
 "nnoremap <leader>lo :lopen<CR> "open locationlist
@@ -215,7 +224,6 @@ let g:ycm_complete_in_strings = 1
 "注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 let g:clang_user_options='|| exit 0'
-"nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 " #####YouCompleteMe Configure  
 
 " ctrlp
