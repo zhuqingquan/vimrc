@@ -307,3 +307,7 @@ endfunction
 
 "autocmd BufWritePost *.c,*.h,*.cpp,*.hpp call UpdateCtags()
 "setlocal tags+=~/.vim/tags/usr-include/tags
+"
+if has('mouse')
+    set mouse-=a
+endif
