@@ -50,6 +50,7 @@ Plugin 'nvie/vim-togglemouse'
 " Syntax/Indent for language enhancement
 " markup language
 Plugin 'tpope/vim-markdown'
+Plugin 'iamcco/markdown-preview.vim'
 " Plugin 'timcharper/textile.vim'
 " Golang
 Plugin 'fatih/vim-go'
