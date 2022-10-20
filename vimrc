@@ -130,7 +130,10 @@ let NERDCompactSexyComs=1
 " Start NERDTree, unless a file or session is specified, eg. vim -S session_file.vim.
 "autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists('s:std_in') && v:this_session == '' | NERDTree | endif
-autocmd VimEnter * NERDTree
+"autocmd VimEnter * NERDTree
+
+let IsVimEnterWithSession=0
+autocmd VimEnter * if v:this_session!='' | let IsVimEnterWithSession=1 | endif
 
 " powerline
 "let g:Powerline_symbols = 'fancy'
@@ -191,6 +194,8 @@ nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 "nnoremap <leader>ff :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <S-F12> :YcmCompleter GoToReferences<CR>
+nnoremap <leader><Tab> :bn<CR>
 "nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 " 自动补全配置
 set completeopt=longest,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
@@ -308,6 +313,8 @@ endfunction
 "autocmd BufWritePost *.c,*.h,*.cpp,*.hpp call UpdateCtags()
 "setlocal tags+=~/.vim/tags/usr-include/tags
 "
+
+autocmd VimLeave * if filereadable(".vimss") && IsVimEnterWithSession==1 | mksession! .vimss | endif
 if has('mouse')
     set mouse-=a
 endif
