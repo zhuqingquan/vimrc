@@ -195,7 +195,8 @@ nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 "nnoremap <leader>ff :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <S-F12> :YcmCompleter GoToReferences<CR>
-nnoremap <leader><Tab> :bn<CR>
+nnoremap <S-Tab> :bn<CR>
+nnoremap <leader><S-Tab> :bp<CR>
 "nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 " 自动补全配置
 set completeopt=longest,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
